@@ -92,6 +92,7 @@ export default function UserDashboard() {
                         ticket.ticket_id === selectedTicket.ticket_id ? updatedTicket : ticket
                     );
                 });
+                fetchTickets();
             } else {
                 console.error("Failed to update ticket:", updatedTicket.message || "Unknown error");
             }
@@ -113,6 +114,7 @@ export default function UserDashboard() {
 
             if (response.ok) {
                 setTicketsData((prevTickets) => [...prevTickets, newTicket]);
+                fetchTickets();
             } else {
                 console.error("Failed to add ticket:", newTicket.message || "Unknown error");
             }
