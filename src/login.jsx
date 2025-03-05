@@ -7,35 +7,14 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false); // Track loading state
   const navigate = useNavigate();
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
-//   const handleLogin = async (e) => {
-//     e.preventDefault();
-//     setIsLoading(true); // Set loading to true when login process starts
-//     try {
-//       const response = await axios.post("http://localhost:5001/api/auth/user/login", { email, password });
-
-//       // Store user info and token in localStorage
-//       localStorage.setItem("token", response.data.token);
-//       localStorage.setItem("user", JSON.stringify(response.data.user));
-
-//       // Redirect based on user role
-//       if (response.data.user.role === "admin") {
-//         navigate("/admin-dashboard");
-//       } else {
-//         navigate("/user-dashboard");
-//       }
-//     } catch (error) {
-//       console.error("Login failed", error);
-//     } finally {
-//       setIsLoading(false); // Set loading to false when the login process ends
-//     }
-//   };
 
 const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true); // Set loading to true when login process starts
     try {
-      const response = await axios.post("http://localhost:5001/api/auth/user/login", { email, password });
+      const response = await axios.post(`${apiBaseUrl}/auth/user/login`, { email, password });
   
       // Store token and user info in localStorage
       localStorage.setItem("token", response.data.token);

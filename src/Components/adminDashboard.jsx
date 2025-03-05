@@ -15,9 +15,12 @@ export default function AdminDashboard() {
     const [totalTickets, setTotalTickets] = useState(0); // Total number of tickets
     const navigate = useNavigate();
 
-    // Fetch users from API
+    
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+
     useEffect(() => {
-        fetch(`http://127.0.0.1:5001/api/auth/user?page=${userPage}&size=${pageSize}`)
+        fetch(`${apiBaseUrl}/auth/user?page=${userPage}&size=${pageSize}`)
             .then((res) => res.json())
             .then((data) => {
                 setUsers(data.data || []);
@@ -28,7 +31,7 @@ export default function AdminDashboard() {
 
     // Fetch tickets from API
     useEffect(() => {
-        fetch(`http://127.0.0.1:5001/api/auth/tickets?page=${ticketPage}&size=${pageSize}`)
+        fetch(`${apiBaseUrl}/auth/tickets?page=${ticketPage}&size=${pageSize}`)
             .then((res) => res.json())
             .then((data) => {
                 setTickets(data.data || []);
@@ -47,7 +50,7 @@ export default function AdminDashboard() {
             console.log("Status to update:", status);  // Log the status value
             console.log("Ticket ID to update:", ticketDetails.ticket_id);  // Log ticket_id
     
-            fetch(`http://127.0.0.1:5001/api/auth/tickets/${ticketDetails.ticket_id}`, {
+            fetch(`${apiBaseUrl}auth/tickets/${ticketDetails.ticket_id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -68,7 +71,7 @@ export default function AdminDashboard() {
     };
 
     const handleDeleteUser = (userId) => {
-        fetch(`http://127.0.0.1:5001/api/auth/user/${userId}`, {
+        fetch(`${apiBaseUrl}/auth/user/${userId}`, {
             method: "DELETE",
         })
         .then((res) => res.json())
@@ -80,7 +83,7 @@ export default function AdminDashboard() {
     };
 
     const handleDeleteTicket = (ticketId) => {
-        fetch(`http://127.0.0.1:5001/api/auth/tickets/${ticketId}`, {
+        fetch(`${apiBaseUrl}/auth/tickets/${ticketId}`, {
             method: "DELETE",
         })
         .then((res) => res.json())

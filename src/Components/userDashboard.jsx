@@ -11,6 +11,8 @@ export default function UserDashboard() {
     // Retrieve token and userId from localStorage or sessionStorage
     const token = localStorage.getItem("authToken");
 
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
     // UseEffect for setting the userId
     useEffect(() => {
         const savedUser = JSON.parse(localStorage.getItem("user"));
@@ -29,7 +31,7 @@ export default function UserDashboard() {
      useEffect(() => {
         const fetchTickets = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:5001/api/auth/tickets/my/${userId}`, {
+                const response = await fetch(`${apiBaseUrl}/auth/tickets/my/${userId}`, {
                     method: 'GET',
                 });
 
@@ -72,7 +74,7 @@ export default function UserDashboard() {
             // Update ticket
             console.log("Updating ticket:", selectedTicket.ticket_id);
 
-            const response = await fetch(`http://127.0.0.53:5001/api/auth/tickets/${selectedTicket.ticket_id}`, {
+            const response = await fetch(`${apiBaseUrl}/auth/tickets/${selectedTicket.ticket_id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -97,7 +99,7 @@ export default function UserDashboard() {
             // Add new ticket
             console.log("Adding new ticket:", ticketData);
 
-            const response = await fetch("http://127.0.0.53:5001/api/auth/tickets", {
+            const response = await fetch(`${apiBaseUrl}/auth/tickets`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

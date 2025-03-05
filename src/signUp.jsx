@@ -11,6 +11,7 @@ const SignUp = () => {
     phone: "",
     address: "",
   });
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const [isLoading, setIsLoading] = useState(false); // Track loading state
   const navigate = useNavigate();
 
@@ -18,25 +19,13 @@ const SignUp = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-//   const handleSignUp = async (e) => {
-//     e.preventDefault();
-//     setIsLoading(true); // Set loading to true when the signup process starts
-//     try {
-//       const response = await axios.post("http://127.0.0.1:5001/api/auth/user", formData);
-//       localStorage.setItem("token", response.data.token);
-//       navigate("/user-dashboard");
-//     } catch (error) {
-//       console.error("Signup failed", error);
-//     } finally {
-//       setIsLoading(false); // Set loading to false when the signup process ends
-//     }
-//   };
+
 
 const handleSignUp = async (e) => {
   e.preventDefault();
   setIsLoading(true); // Set loading to true when the signup process starts
   try {
-    const response = await axios.post("http://127.0.0.1:5001/api/auth/user", formData);
+    const response = await axios.post(`${apiBaseUrl}/auth/user`, formData);
 
     // Store token and user info in localStorage after successful signup
     localStorage.setItem("token", response.data.token);
