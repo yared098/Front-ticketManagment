@@ -105,7 +105,11 @@ export default function UserDashboard() {
             return;
         }
 
-        const ticketData = JSON.stringify({ ...formData, createdBy: String(userId) });
+        // Ensure userId is a string
+        const createdBy = String(userId);
+
+        // Create the ticket data object with createdBy as a string
+        const ticketData = JSON.stringify({ ...formData, createdBy });
 
         try {
             let response;
@@ -236,34 +240,43 @@ export default function UserDashboard() {
                 {filteredTickets.map((ticket) => (
                     <div
                         key={ticket.ticket_id}
-                        className="p-4 border rounded-lg shadow-md bg-white cursor-pointer"
+                        className="p-6 border rounded-lg shadow-md bg-cover bg-center text-white cursor-pointer relative"
+                        style={{
+                            backgroundImage: "url('https://e7.pngegg.com/pngimages/990/187/png-clipart-raffle-ticket-lottery-casino-darts-miscellaneous-game-thumbnail.png')"
+                        }}
                         onClick={() => handleTicketClick(ticket)}
                     >
-                        <h3 className="font-semibold">{ticket.title}</h3>
-                        <p>{ticket.description}</p>
-                        <span
-                            className={`px-2 py-1 rounded text-sm font-bold ${ticket.status === 'Open'
-                                ? 'bg-green-200 text-green-800'
-                                : ticket.status === 'Closed'
-                                    ? 'bg-red-200 text-red-800'
-                                    : 'bg-yellow-200 text-yellow-800'
-                                }`}
-                        >
-                            {ticket.status}
-                        </span>
-                        <div className="flex justify-end mt-2">
-                            <PencilIcon
-                                className="w-5 h-5 text-blue-500 cursor-pointer mr-2"
-                                onClick={() => handleEditTicket(ticket)}
-                            />
-                            <TrashIcon
-                                className="w-5 h-5 text-red-500 cursor-pointer"
-                                onClick={() => handleDeleteTicket(ticket.ticket_id)}
-                            />
+                        {/* Dark overlay for readability */}
+                        <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg"></div>
+
+                        <div className="relative z-10">
+                            <h3 className="font-semibold text-lg">{ticket.title}</h3>
+                            <p className="text-sm">{ticket.description}</p>
+                            <span
+                                className={`px-3 py-1 rounded text-sm font-bold mt-2 inline-block ${ticket.status === 'Open'
+                                    ? 'bg-green-400 text-green-900'
+                                    : ticket.status === 'Closed'
+                                        ? 'bg-red-400 text-red-900'
+                                        : 'bg-yellow-400 text-yellow-900'
+                                    }`}
+                            >
+                                {ticket.status}
+                            </span>
+                            <div className="flex justify-end space-x-4 mt-3">
+                                <PencilIcon
+                                    className="w-6 h-6 text-blue-400 cursor-pointer"
+                                    onClick={() => handleEditTicket(ticket)}
+                                />
+                                <TrashIcon
+                                    className="w-6 h-6 text-red-400 cursor-pointer"
+                                    onClick={() => handleDeleteTicket(ticket.ticket_id)}
+                                />
+                            </div>
                         </div>
                     </div>
                 ))}
             </div>
+
 
             {/* Floating Action Button for Adding New Ticket */}
             <button

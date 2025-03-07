@@ -41,7 +41,7 @@ export default function Tickets({ apiBaseUrl, ticketPage, pageSize, filter }) {
         try {
             // Make the API call to update the ticket status
             const response = await fetch(`${apiBaseUrl}/auth/tickets/${selectedTicket.ticket_id}`, {
-                method: "PATCH",
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
